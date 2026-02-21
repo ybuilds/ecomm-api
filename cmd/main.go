@@ -28,10 +28,6 @@ func main() {
 		},
 	}
 
-	api := api{
-		config: cfg,
-	}
-
 	conn, err := pgx.Connect(ctx, cfg.db.dsn)
 	if err != nil {
 		slog.Error("connection to database failed", "error", err)
@@ -39,6 +35,11 @@ func main() {
 	}
 	defer conn.Close(ctx)
 	logger.Info("connected to database", "dsn", cfg.db.dsn)
+
+	api := api{
+		config: cfg,
+		db:     conn,
+	}
 
 	if err := api.run(api.mount()); err != nil {
 		slog.Error("server has failed to start", "error", err)
