@@ -12,10 +12,10 @@ type Service interface {
 }
 
 type svc struct {
-	repo repo.Querier
+	repo *repo.Queries
 }
 
-func NewService(repo repo.Querier) Service {
+func NewService(repo *repo.Queries) Service {
 	return &svc{
 		repo: repo,
 	}
